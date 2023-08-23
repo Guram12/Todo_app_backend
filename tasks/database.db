@@ -1,0 +1,2 @@
+INSERT INTO tasks_category (id ,  name , description) 
+VALUES (0 , 'shopping list',  'my shopping list');
