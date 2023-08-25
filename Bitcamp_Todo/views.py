@@ -1,8 +1,8 @@
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .serialisers import UserCreateSerializer
+from .serialisers import UserCreateSerializer , UserSerializer
 
 
 
@@ -15,3 +15,11 @@ class UserCreateView(APIView):
             return Response({"massage":'user created saccessfilly'}, status=status.HTTP_201_CREATED)
         else:
             return Response(serialiser.errors, status=status.HTTP_400_BAD_REQUEST)
+        
+
+class CurrentUserView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, request):
+        serializer = UserSerializer(request.user)
+        return Response(serializer.data)
